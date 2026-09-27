@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Propuesta Fundación Alhelí por Carmen Oliva</title>
+<meta name="description" content="Propuesta de implantación para la Fundación Alhelí: organización, fases, funciones del equipo, estructura del Drive y presupuesto.">
+<meta property="og:title" content="Propuesta Fundación Alhelí por Carmen Oliva">
+<meta property="og:description" content="Organización, fases, funciones del equipo, estructura del Drive y presupuesto.">
+<meta property="og:type" content="website">
+<meta name="robots" content="noindex">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F6F9F7; --surface:#FFFFFF; --ink:#1F2A23; --muted:#5E6B63; --line:#DCE6DF;
+  --accent:#304838; --accent-soft:#E4EFE8; --sage:#3F7F5F; --sage-soft:#E1F0E6;
+  --brand:#5A9E7C; --mint:#99C3A0;
+  --amber:#9A6A1E; --amber-soft:#F6ECDB;
+  --serif:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sans:"Roboto",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#141B17; --surface:#1C2520; --ink:#E6EEE9; --muted:#9FB0A6; --line:#2E3B34;
+    --accent:#8FC7A6; --accent-soft:#22332A; --sage:#99C3A0; --sage-soft:#1F3028;
+    --brand:#7DBB9A; --mint:#99C3A0;
+    --amber:#E0B46A; --amber-soft:#3A2F1C;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#141B17; --surface:#1C2520; --ink:#E6EEE9; --muted:#9FB0A6; --line:#2E3B34;
+  --accent:#8FC7A6; --accent-soft:#22332A; --sage:#99C3A0; --sage-soft:#1F3028;
+  --brand:#7DBB9A; --mint:#99C3A0;
+  --amber:#E0B46A; --amber-soft:#3A2F1C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;padding-inline:16px}
+.wrap{max-width:960px;margin:0 auto;padding-block:32px 72px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem)}
+h2{font-size:clamp(1.6rem,3.6vw,2.1rem)}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.eyebrow{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:600}
+.muted{color:var(--muted)}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:10px 16px}
+nav .row{max-width:960px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav a{flex:none;text-decoration:none;color:var(--muted);font-size:.85rem;font-weight:500;padding:6px 12px;border-radius:999px}
+nav a:hover{background:var(--accent-soft);color:var(--accent)}
+
+/* hero */
+header.hero{display:grid;gap:18px;padding-block:40px 24px}
+.logo{display:inline-flex;background:#FFFFFF;border-radius:14px;padding:10px 16px;border:1px solid var(--line);justify-self:start}
+.logo img{display:block;height:52px;width:auto}
+.price s{color:var(--muted);font-weight:400;margin-right:6px}
+.free{display:inline-block;margin-top:4px;font-size:.78rem;font-weight:600;color:var(--sage);background:var(--sage-soft);padding:2px 10px;border-radius:999px}
+.hero .lead{font-size:1.15rem;max-width:62ch;color:var(--muted)}
+.byline{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.9rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:.95rem;padding:10px 18px;border-radius:999px;background:var(--accent);color:var(--bg)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+
+section{padding-block:48px 8px;display:grid;gap:22px;scroll-margin-top:64px}
+section > header{display:grid;gap:8px;max-width:65ch}
+
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:8px;align-content:start}
+.card .k{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.risk{font-size:.9rem;color:var(--amber);background:var(--amber-soft);border-radius:8px;padding:8px 10px}
+
+/* intro bio */
+.bio{display:grid;gap:16px;grid-template-columns:1fr;background:var(--accent-soft);border-radius:18px;padding:24px}
+.bio p{max-width:62ch}
+
+/* objectives */
+ol.goals{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+ol.goals li{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.num{font-family:var(--serif);font-weight:700;font-size:1.5rem;color:var(--brand);line-height:1}
+ol.goals strong{display:block}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px}
+.opt{display:grid;gap:2px;background:var(--accent-soft);border-radius:12px;padding:12px 14px}
+.opt .k{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.opt .big{font-family:var(--serif);font-weight:700;font-size:1.6rem;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.opt .big small{font-size:.85rem;font-weight:500;color:var(--muted);margin-left:2px}
+.opt .yr{font-weight:500;font-variant-numeric:tabular-nums}
+.calc{display:block;margin-top:8px;font-size:.85rem}
+
+/* timeline */
+.trial{display:grid;gap:6px;border:1px dashed var(--sage);background:var(--sage-soft);border-radius:14px;padding:16px 18px}
+.trial b{color:var(--sage)}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:28px 1fr;gap:16px;position:relative;padding-bottom:22px}
+.timeline li::before{content:"";position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--line)}
+.timeline li:last-child::before{display:none}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.tl-body{display:grid;gap:6px}
+.tl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.when{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:999px;letter-spacing:.02em}
+.pill.trial-p{background:var(--sage-soft);color:var(--sage)}
+.pill.done{background:var(--sage-soft);color:var(--sage)}
+.pill.todo{background:var(--amber-soft);color:var(--amber)}
+.price{font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+
+/* how I work */
+.how{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.how div{border-top:2px solid var(--brand);padding-top:10px;display:grid;gap:4px}
+.how b{font-weight:600}
+
+/* team tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:inherit;font-weight:600;font-size:.92rem;border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.panel{display:grid;gap:14px}
+.card ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.card ul li::marker{color:var(--accent)}
+.note{border-left:3px solid var(--amber);padding:10px 14px;background:var(--amber-soft);border-radius:0 10px 10px 0;font-size:.95rem}
+
+/* drive tree */
+.tree{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:2px}
+.tree details{border-radius:8px}
+.tree summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:8px 8px;border-radius:8px;font-weight:600}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary:hover{background:var(--accent-soft)}
+.tree summary .code{font-variant-numeric:tabular-nums;color:var(--accent);font-size:.85rem;min-width:24px}
+.tree summary .chev{margin-left:auto;color:var(--muted);transition:transform .2s}
+.tree details[open] > summary .chev{transform:rotate(90deg)}
+.tree ul{list-style:none;margin:0 0 8px 0;padding:0 0 0 44px;display:grid;gap:3px;font-size:.93rem}
+.tree ul ul{padding-left:20px;margin:3px 0;color:var(--muted);font-size:.88rem}
+.tree li{position:relative}
+.tree li::before{content:"";display:inline-block;width:8px;height:8px;border:1.5px solid var(--muted);border-radius:2px;margin-right:8px;vertical-align:1px}
+.lock{font-size:.72rem;font-weight:700;color:var(--amber);background:var(--amber-soft);padding:2px 8px;border-radius:999px;margin-left:6px}
+.naming{display:grid;gap:6px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.88rem;background:var(--accent-soft);color:var(--accent);padding:2px 6px;border-radius:6px;word-break:break-word}
+
+/* tables */
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.95rem}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.arrow{color:var(--accent);font-weight:700}
+tfoot td{font-weight:700;background:var(--accent-soft)}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:50%;border:1.5px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:700}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;color:var(--muted);font-size:.9rem}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+
+<nav aria-label="Secciones">
+  <div class="row">
+    <a href="#presentacion">Presentación</a>
+    <a href="#diagnostico">Diagnóstico</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#fases">Fases</a>
+    <a href="#metodo">Cómo trabajo</a>
+    <a href="#equipo">Funciones del equipo</a>
+    <a href="#drive">Estructura Drive</a>
+    <a href="#entregables">Entregables</a>
+    <a href="#indicadores">Indicadores</a>
+    <a href="#presupuesto">Presupuesto</a>
+    <a href="#pasos">Próximos pasos</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="logo"><img src="data:image/png;base64,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" alt="Fundación Alhelí" width="221" height="52"></span>
+  <h1>Propuesta de implantación</h1>
+  <p class="lead">Organización, financiación y gestión de proyectos para que la Fundación pueda seguir acompañando el duelo con una estructura sólida y sostenible.</p>
+  <div class="byline"><span>Carmen Oliva · Project Manager</span><span>Septiembre 2026</span></div>
+</header>
+
+<section id="presentacion">
+  <div class="bio">
+    <span class="eyebrow">Presentación</span>
+    <h2>Quién soy</h2>
+    <p>Soy Carmen Oliva, coordinadora de proyectos. Durante tres años gestioné un centro de discapacidad infantil dependiente de la Fundación Global Gift. Conozco desde dentro cómo funciona una entidad social: los equipos pequeños, las subvenciones, el voluntariado y la necesidad de que cada euro rinda.</p>
+    <p>Esta propuesta explica cómo puedo acompañar a Alhelí para ordenar su organización, en qué plazos y con qué resultados medibles.</p>
+    <div class="actions">
+      <a class="btn" href="https://carmen-oliva-blanco.github.io/web-Carmen-Oliva/" target="_blank" rel="noopener">Ver mi web y portfolio ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="diagnostico">
+  <header>
+    <span class="eyebrow">Diagnóstico</span>
+    <h2>Dónde está hoy la Fundación</h2>
+    <p class="muted">Alhelí hace un trabajo muy valioso y es la única entidad de la zona que atiende el duelo patológico. Su estructura, en cambio, no ha crecido al mismo ritmo que su actividad.</p>
+  </header>
+  <div class="grid g3">
+    <div class="card"><span class="k">Financiación</span><p>Una subvención (Ayuntamiento), 3 eventos al año y unos 130 socios. La aportación de los 380 usuarios es voluntaria.</p><p class="risk">Si la subvención se retrasa o se reduce, la continuidad peligra.</p></div>
+    <div class="card"><span class="k">Subvenciones</span><p>Las llevan entre dos departamentos, sin un responsable final ni un calendario.</p><p class="risk">Se pierden convocatorias y se duplica el trabajo.</p></div>
+    <div class="card"><span class="k">Eventos</span><p>Los organiza todo el equipo, sin una persona referente.</p><p class="risk">Sobrecarga del equipo y recaudación sin objetivo.</p></div>
+    <div class="card"><span class="k">Documentación</span><p>Sin una estructura común ni normas para nombrar los archivos.</p><p class="risk">Pérdida de tiempo y riesgo de perder subvenciones.</p></div>
+    <div class="card"><span class="k">Funciones</span><p>Los puestos no están definidos por escrito.</p><p class="risk">Tareas que se solapan o se quedan sin hacer.</p></div>
+    <div class="card"><span class="k">Alianzas y patrocinio</span><p>Actualmente solo hay 1 patrocinio.</p><p class="risk">Visibilidad y recursos por debajo de lo posible.</p></div>
+  </div>
+</section>
+
+<section id="objetivos">
+  <header>
+    <span class="eyebrow">Objetivos a 12 meses</span>
+    <h2>Qué queremos conseguir</h2>
+  </header>
+  <ol class="goals">
+    <li><span class="num">1</span><div><strong>Diversificar la financiación</strong>Al menos 4 fuentes de ingresos activas, sin que ninguna supere el 50 % del presupuesto.</div></li>
+    <li><span class="num">2</span><div><strong>Poner en marcha la cuota de usuarios</strong>Cuota mensual cobrada por domiciliación en al menos el 80 % de los usuarios, salvo las excepciones que apruebe el Patronato. Hoy hay 380 usuarios; si pagan 300, estas son las dos opciones:
+      <div class="opts">
+        <div class="opt"><span class="k">Opción A · cuota de 5 €</span><span class="big">1.500 €<small>/mes</small></span><span class="yr">18.000 € al año</span></div>
+        <div class="opt"><span class="k">Opción B · cuota de 10 €</span><span class="big">3.000 €<small>/mes</small></span><span class="yr">36.000 € al año</span></div>
+      </div>
+      <span class="muted calc">Cálculo: 300 usuarios × cuota × 12 meses. La cuota final la decide el Patronato.</span></div></li>
+    <li><span class="num">3</span><div><strong>Profesionalizar las subvenciones</strong>Presentarse al menos a 4 convocatorias al año, con calendario y responsables definidos.</div></li>
+    <li><span class="num">4</span><div><strong>Ordenar la organización</strong>Organigrama aprobado, funciones por escrito y un Drive estructurado con permisos por carpeta.</div></li>
+    <li><span class="num">5</span><div><strong>Abrir la Fundación al entorno</strong>Al menos 1 convenio de alianza y 3 empresas colaboradoras.</div></li>
+  </ol>
+</section>
+
+<section id="fases">
+  <header>
+    <span class="eyebrow">Fases y calendario</span>
+    <h2>Cómo lo haremos, paso a paso</h2>
+  </header>
+  <div class="trial">
+    <b>Periodo de prueba · hasta diciembre de 2026</b>
+    <p>Los tres primeros meses de trabajo serán un periodo de prueba para comprobar que ambas partes están contentas con la colaboración. Al terminar, se decidirá conjuntamente si se continúa con el seguimiento mensual.</p>
+  </div>
+  <ol class="timeline">
+    <li><span class="dot">1</span><div class="tl-body"><div class="tl-head"><h3>Reunión inicial</h3><span class="when">Septiembre 2026</span><span class="pill trial-p">Periodo de prueba</span></div><p>Reunión con todo el equipo para escuchar sus inquietudes y conocer cómo trabaja cada departamento.</p></div></li>
+    <li><span class="dot">2</span><div class="tl-body"><div class="tl-head"><h3>Análisis y estrategia</h3><span class="when">Septiembre 2026</span><span class="pill trial-p">Periodo de prueba</span></div><p>Análisis de la situación. Elaboración de la estrategia, con objetivos e indicadores de medición. Presentación de esta propuesta al Patronato.</p></div></li>
+    <li><span class="dot">3</span><div class="tl-body"><div class="tl-head"><h3>Mes 1: implementación</h3><span class="when">Octubre 2026</span><span class="pill trial-p">Periodo de prueba</span></div><p>Aprobación del organigrama y de las funciones. Montaje del Drive, de sus permisos y del tablero de tareas. Aprobación de la cuota y del criterio de excepciones. Implementación de diferentes herramientas para estar al día de las subvenciones a las que puede acceder la Fundación.</p></div></li>
+    <li><span class="dot">4</span><div class="tl-body"><div class="tl-head"><h3>Seguimiento mensual</h3><span class="when">Noviembre 2026 – septiembre 2027</span></div><p>Revisión mensual de tareas, cumplimiento de objetivos y ajuste de plazos. Puesta en marcha de la cuota por domiciliación. Alertas de Info Subvenciones y calendario de convocatorias. Dossier de patrocinio, reuniones con empresas y primer convenio de alianza. Evento conjunto con una entidad aliada y primer taller de formación de pago. Balance anual ante el Patronato.</p></div></li>
+  </ol>
+</section>
+
+<section id="metodo">
+  <header>
+    <span class="eyebrow">Método</span>
+    <h2>Cómo va a trabajar la coordinadora de proyecto</h2>
+  </header>
+  <div class="how">
+    <div><b>Reunión inicial</b><span class="muted">Escuchar a cada persona del equipo para conocer sus inquietudes.</span></div>
+    <div><b>Análisis de la situación</b><span class="muted">Estudiar la estructura y las oportunidades de cada departamento para definir la estrategia.</span></div>
+    <div><b>Objetivos</b><span class="muted">Claros, alcanzables y con un plazo definido.</span></div>
+    <div><b>Implementación de herramientas</b><span class="muted">Para que cada persona trabaje con autonomía y encuentre la información cuando la necesite.</span></div>
+    <div><b>Herramientas</b><span class="muted">Google Drive para la documentación y, de forma opcional, un tablero de tareas sencillo tipo Trello.</span></div>
+    <div><b>Seguimiento mensual</b><span class="muted">Revisión de la estructura, las tareas y el cumplimiento de objetivos.</span></div>
+    <div><b>Interlocutor en la Fundación</b><span class="muted">Una persona o el Patronato será designado para recibir la información y tomar decisiones.</span></div>
+  </div>
+</section>
+
+<section id="equipo">
+  <header>
+    <span class="eyebrow">Funciones del equipo</span>
+    <h2>Quién hace qué</h2>
+    <p class="muted">Funciones por escrito para que nada se solape ni se quede sin hacer.</p>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Departamentos">
+    <button class="tab" role="tab" id="tab-admin" aria-controls="p-admin" aria-selected="true">Administración y Finanzas</button>
+    <button class="tab" role="tab" id="tab-ter" aria-controls="p-ter" aria-selected="false">Terapias</button>
+  </div>
+
+  <div class="panel" id="p-admin" role="tabpanel" aria-labelledby="tab-admin">
+    <div class="grid g2">
+      <div class="card"><span class="k">Administrativa</span><h3>Gestión de usuarios y socios</h3><ul>
+        <li>Mantener al día la base de datos de usuarios, socios y donantes: altas, bajas y cambios.</li>
+        <li>Recoger y archivar los consentimientos RGPD y las órdenes de domiciliación SEPA.</li>
+        <li>Llevar el registro de las excepciones de cuota que apruebe el Patronato.</li></ul></div>
+      <div class="card"><span class="k">Administrativa</span><h3>Cobros y domiciliaciones</h3><ul>
+        <li>Preparar y enviar las remesas mensuales de domiciliaciones, junto con la tesorera.</li>
+        <li>Gestionar los recibos devueltos y contactar con quien corresponda.</li>
+        <li>Preparar los datos de los certificados de donación y del modelo 182, si no los hace la gestoría.</li></ul></div>
+      <div class="card"><span class="k">Administrativa</span><h3>Subvenciones (apoyo administrativo)</h3><ul>
+        <li>Gestionar las alertas de Info Subvenciones y avisar de las convocatorias nuevas.</li>
+        <li>Mantener al día el calendario de convocatorias y la documentación base: CIF, estatutos, certificados de Hacienda y Seguridad Social.</li>
+        <li>Reunir la documentación administrativa de cada solicitud y justificación.</li></ul></div>
+      <div class="card"><span class="k">Administrativa</span><h3>Administración general</h3><ul>
+        <li>Atender el teléfono y el correo.</li>
+        <li>Gestionar la agenda de citas con las psicólogas.</li>
+        <li>Archivar en el Drive con la estructura y la nomenclatura acordadas.</li>
+        <li>Recibir y registrar facturas y contratos de proveedores.</li>
+        <li>Apoyo logístico en talleres y eventos: inscripciones, listados y comunicaciones.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="panel" id="p-ter" role="tabpanel" aria-labelledby="tab-ter" hidden>
+    <div class="grid g2">
+      <div class="card"><span class="k">Las tres psicólogas</span><h3>Funciones comunes</h3><ul>
+        <li>Evaluación inicial y valoración del duelo de cada persona que llega.</li>
+        <li>Terapia individual, familiar y de grupo.</li>
+        <li>Expedientes e historias clínicas al día, en la carpeta de acceso restringido.</li>
+        <li>Registro de la actividad (sesiones y usuarios) con datos anonimizados, para la memoria anual y las subvenciones.</li>
+        <li>Derivación y coordinación con salud mental, servicios sociales o entidades aliadas.</li>
+        <li>Reuniones de equipo y revisión de casos.</li>
+        <li>Talleres y charlas de sensibilización y, más adelante, formación de pago.</li>
+        <li>Participación en los eventos solidarios.</li></ul></div>
+      <div class="card"><span class="k">Además</span><h3>Psicóloga coordinadora</h3><ul>
+        <li>Coordina al equipo: agenda, casos, grupos y reuniones.</li>
+        <li>Redacta la parte técnica de las subvenciones y sus justificaciones: objetivos, actividades e indicadores.</li>
+        <li>Elabora y actualiza los protocolos de intervención.</li>
+        <li>Enlace con la coordinación general y el Patronato en temas de Terapias.</li>
+        <li>Representa a Alhelí ante entidades aliadas y patrocinadores.</li>
+        <li>Supervisa la calidad de la atención y la formación continua.</li></ul></div>
+    </div>
+    <p class="note"><b>Punto a definir:</b> cuánto tiempo dedica la coordinadora a gestión y cuánto a consulta. Si tiene la misma carga de pacientes que las otras dos psicólogas, no le dará tiempo a llevar las subvenciones.</p>
+  </div>
+</section>
+
+<section id="drive">
+  <header>
+    <span class="eyebrow">Estructura en Drive</span>
+    <h2>Todo en su sitio</h2>
+    <p class="muted">Una carpeta por área, numeradas para que siempre aparezcan en el mismo orden. Pulsa en cada una para ver qué contiene.</p>
+  </header>
+  <div class="tree">
+    <details open><summary><span class="code">00</span>Gobierno y dirección<span class="chev">›</span></summary><ul>
+      <li>01 Estatutos y documentación legal</li>
+      <li>02 Patronato (actas, convocatorias, acuerdos)</li>
+      <li>03 Plan estratégico y memorias anuales</li>
+      <li>04 Coordinación general (planificación, seguimiento, reuniones)</li></ul></details>
+    <details><summary><span class="code">01</span>Administración y finanzas<span class="chev">›</span></summary><ul>
+      <li>01 Base de datos (socios, donantes, colaboradores)</li>
+      <li>02 Cobros y domiciliaciones<ul><li>2026 / 2027…</li></ul></li>
+      <li>03 Contabilidad y tesorería<ul><li>Facturas emitidas</li><li>Facturas recibidas</li><li>Diario banco</li><li>Presupuestos anuales</li></ul></li>
+      <li>04 Certificados de donación (si no lo lleva la gestoría)</li>
+      <li>05 Recursos humanos (contratos, nóminas, seguros)</li>
+      <li>06 Proveedores y contratos</li></ul></details>
+    <details><summary><span class="code">02</span>Subvenciones<span class="chev">›</span></summary><ul>
+      <li>00 Calendario de convocatorias y seguimiento</li>
+      <li>01 Documentación base (certificados, CIF, estatutos, memorias)</li>
+      <li>2026 → [Entidad]_[Nombre convocatoria]<ul><li>01 Bases y convocatoria</li><li>02 Proyecto técnico (Terapias)</li><li>03 Presupuesto (Admin. y Finanzas)</li><li>04 Solicitud presentada</li><li>05 Resolución</li><li>06 Justificación (técnica + económica)</li></ul></li></ul></details>
+    <details><summary><span class="code">03</span>Terapias<span class="chev">›</span></summary><ul>
+      <li>01 Protocolos y procedimientos</li>
+      <li>02 Programas e intervenciones (grupales, individuales)</li>
+      <li>03 Expedientes de pacientes <span class="lock">Acceso restringido</span></li></ul></details>
+    <details><summary><span class="code">04</span>Eventos<span class="chev">›</span></summary><ul>
+      <li>00 Calendario anual de eventos</li>
+      <li>01 Plantillas (checklist, presupuesto, carteles)</li>
+      <li>2026 → AAAA-MM_[Nombre evento]<ul><li>Planificación</li><li>Difusión y cartelería</li><li>Fotos y vídeos</li><li>Balance y cierre</li></ul></li></ul></details>
+    <details><summary><span class="code">05</span>Voluntariado<span class="chev">›</span></summary><ul>
+      <li>Fichas y acuerdos de voluntariado</li><li>Seguros</li><li>Formación y acogida</li></ul></details>
+    <details><summary><span class="code">06</span>Comunicación<span class="chev">›</span></summary><ul>
+      <li>Imagen corporativa (logos, plantillas)</li><li>Redes sociales</li><li>Prensa y notas</li></ul></details>
+    <details><summary><span class="code">07</span>Protección de datos (RGPD)<span class="chev">›</span></summary><ul>
+      <li>Registro de actividades de tratamiento</li><li>Consentimientos (modelos)</li><li>Contratos de encargado de tratamiento</li></ul></details>
+    <details><summary><span class="code">99</span>Archivo (años cerrados)<span class="chev">›</span></summary><ul><li>Documentación de ejercicios ya cerrados</li></ul></details>
+  </div>
+  <div class="naming">
+    <div class="card"><span class="k">Cómo nombrar los archivos</span><p><code>AAAA-MM-DD_Tipo_Descripción_v1</code></p><p class="muted">Ejemplo: <code>2026-10-15_Acta_Patronato_v1</code></p></div>
+    <div class="card"><span class="k">Permisos</span><p>Los expedientes de pacientes solo los ve el equipo de Terapias. El resto de permisos se fijan por carpeta en la matriz de permisos.</p></div>
+  </div>
+</section>
+
+<section id="entregables">
+  <header>
+    <span class="eyebrow">Entregables</span>
+    <h2>Qué se entrega y cuándo</h2>
+  </header>
+  <div class="tbl"><table>
+    <thead><tr><th>Entregable</th><th>Fase</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>Organigrama de la Fundación</td><td class="n">2</td><td><span class="pill done">Entregado</span></td></tr>
+      <tr><td>Estructura de carpetas del Drive</td><td class="n">2</td><td><span class="pill done">Entregado</span></td></tr>
+      <tr><td>Plan de financiación</td><td class="n">2</td><td><span class="pill done">Entregado</span></td></tr>
+      <tr><td>Funciones de la administrativa y de las psicólogas</td><td class="n">2</td><td><span class="pill done">Entregado</span></td></tr>
+      <tr><td>Propuesta de implantación</td><td class="n">2</td><td><span class="pill done">Entregado</span></td></tr>
+      <tr><td>Matriz de permisos del Drive</td><td class="n">3</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Mapa de procesos clave: alta de usuario, cobro de cuota, ciclo de una subvención y organización de un evento</td><td class="n">3</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Calendario anual de la Fundación</td><td class="n">3</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Comunicación a usuarios sobre la cuota (carta y guion para consulta)</td><td class="n">4</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Dossier para patrocinadores</td><td class="n">4</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Modelo de convenio de colaboración</td><td class="n">4</td><td><span class="pill todo">Pendiente</span></td></tr>
+      <tr><td>Cuadro de indicadores e informe semestral</td><td class="n">4</td><td><span class="pill todo">Pendiente</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="indicadores">
+  <header>
+    <span class="eyebrow">Indicadores de seguimiento</span>
+    <h2>Cómo mediremos el avance</h2>
+  </header>
+  <div class="tbl"><table>
+    <thead><tr><th>Indicador</th><th>Hoy</th><th></th><th>Meta a 12 meses</th></tr></thead>
+    <tbody>
+      <tr><td>Fuentes de ingresos activas</td><td class="n">3</td><td class="arrow">→</td><td class="n">4 o más</td></tr>
+      <tr><td>Peso de la subvención principal en el presupuesto</td><td class="n">Por medir</td><td class="arrow">→</td><td class="n">50 % o menos</td></tr>
+      <tr><td>Usuarios con cuota activa</td><td class="n">Por medir</td><td class="arrow">→</td><td class="n">80 %</td></tr>
+      <tr><td>Socios</td><td class="n">Unos 130</td><td class="arrow">→</td><td class="n">250</td></tr>
+      <tr><td>Convocatorias de subvención presentadas al año</td><td class="n">1</td><td class="arrow">→</td><td class="n">4</td></tr>
+      <tr><td>Empresas colaboradoras</td><td class="n">1</td><td class="arrow">→</td><td class="n">3</td></tr>
+      <tr><td>Convenios de alianza firmados</td><td class="n">0</td><td class="arrow">→</td><td class="n">1</td></tr>
+      <tr><td>Recaudación media por evento</td><td class="n">Por medir</td><td class="arrow">→</td><td class="n">+20 %</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="presupuesto">
+  <header>
+    <span class="eyebrow">Presupuesto</span>
+    <h2>Inversión</h2>
+  </header>
+  <div class="tbl"><table>
+    <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+    <tbody>
+      <tr><td><b>1. Reunión inicial con el equipo</b></td><td class="n price">0 €</td></tr>
+      <tr><td><b>2. Análisis y estrategia</b><br><span class="muted">Análisis de la situación y elaboración de la estrategia, definiendo los objetivos con sus indicadores de medición.</span></td><td class="n price"><s>500 €</s>0 €<br><span class="free">Sin coste para la Fundación</span></td></tr>
+      <tr><td><b>3. Mes 1: implementación</b><br><span class="muted">Implementación de todas las herramientas (Drive, funciones, tareas…).</span></td><td class="n price">400 €</td></tr>
+      <tr><td><b>4. Seguimiento mensual</b><br><span class="muted">Revisión de tareas, cumplimiento de objetivos en plazo y adaptación de plazos y tareas a la realidad diaria que vaya surgiendo.</span></td><td class="n price">300 €/mes</td></tr>
+    </tbody>
+    <tfoot><tr><td>Total</td><td class="n">400 € + 300 €/mes</td></tr></tfoot>
+  </table></div>
+  <div class="grid g2">
+    <div class="card"><span class="k">Forma de pago</span><p>El punto 3 se abona al finalizar y el seguimiento se factura al final de cada mes. Parte de los honorarios puede incluirse como coste de gestión en las subvenciones que lo permitan.</p></div>
+    <div class="card"><span class="k">Presupuesto orientativo</span><p>Está condicionado a la complejidad real del trabajo. Una vez pasados los tres meses del periodo de prueba (diciembre de 2026), se revisará con la Fundación y, si es necesario, se ajustará.</p></div>
+  </div>
+</section>
+
+<section id="pasos">
+  <header>
+    <span class="eyebrow">Próximos pasos</span>
+    <h2>Para empezar</h2>
+  </header>
+  <ol class="steps">
+    <li>Presentar esta propuesta al Patronato y resolver sus dudas.</li>
+    <li>Aprobar la propuesta y fijar el calendario de la implementación (mes 1).</li>
+    <li>Hacer una reunión de arranque con todo el equipo para presentar el organigrama y las funciones.</li>
+  </ol>
+</section>
+
+<footer>
+  <span>Carmen Oliva · Project Manager</span>
+  <a href="https://carmen-oliva-blanco.github.io/web-Carmen-Oliva/" target="_blank" rel="noopener">carmen-oliva-blanco.github.io/web-Carmen-Oliva ↗</a>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function select(t){
+    tabs.forEach(function(x){
+      var on=x===t; x.setAttribute('aria-selected',on?'true':'false');
+      document.getElementById(x.getAttribute('aria-controls')).hidden=!on;
+    });
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){select(t)});});
+})();
+</script>
+
+</body>
+</html>
