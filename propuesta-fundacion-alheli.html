@@ -154,6 +154,8 @@ tr:last-child td{border-bottom:0}
 td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
 .arrow{color:var(--accent);font-weight:700}
 tfoot td{font-weight:700;background:var(--accent-soft)}
+.tax{font-size:.8rem;font-weight:600;color:var(--muted)}
+.taxnote{margin:0;font-size:.95rem;color:var(--muted);padding-left:12px;border-left:3px solid var(--brand)}
 
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
 .steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start}
@@ -423,17 +425,19 @@ html{scroll-behavior:smooth}
     <h2>Inversión</h2>
   </header>
   <div class="tbl"><table>
-    <thead><tr><th>Concepto</th><th>Importe</th></tr></thead>
+    <thead><tr><th>Concepto</th><th>Importe <span style="text-transform:none;letter-spacing:0;font-weight:500">(impuestos no incluidos)</span></th></tr></thead>
     <tbody>
       <tr><td><b>1. Reunión inicial con el equipo</b></td><td class="n price">0 €</td></tr>
       <tr><td><b>2. Análisis y estrategia</b><br><span class="muted">Análisis de la situación y elaboración de la estrategia, definiendo los objetivos con sus indicadores de medición.</span></td><td class="n price"><s>500 €</s>0 €<br><span class="free">Sin coste para la Fundación</span></td></tr>
       <tr><td><b>3. Mes 1: implementación</b><br><span class="muted">Implementación de todas las herramientas (Drive, funciones, tareas…).</span></td><td class="n price">400 €</td></tr>
       <tr><td><b>4. Seguimiento mensual</b><br><span class="muted">Revisión de tareas, cumplimiento de objetivos en plazo y adaptación de plazos y tareas a la realidad diaria que vaya surgiendo.</span></td><td class="n price">300 €/mes</td></tr>
     </tbody>
-    <tfoot><tr><td>Total</td><td class="n">400 € + 300 €/mes</td></tr></tfoot>
+    <tfoot><tr><td>Total <span class="muted" style="font-weight:500">(base imponible)</span></td><td class="n">400 € + 300 €/mes<br><span class="tax">+ impuestos</span></td></tr></tfoot>
   </table></div>
-  <div class="grid g2">
+  <p class="taxnote">Los precios indicados en este presupuesto son <b>más impuestos</b>.</p>
+  <div class="grid g3">
     <div class="card"><span class="k">Forma de pago</span><p>El punto 3 se abona al finalizar y el seguimiento se factura al final de cada mes. Parte de los honorarios puede incluirse como coste de gestión en las subvenciones que lo permitan.</p></div>
+    <div class="card"><span class="k">Impuestos</span><p>Todos los importes de este presupuesto se expresan sin impuestos. En cada factura se aplicarán los impuestos correspondientes según la normativa vigente.</p></div>
     <div class="card"><span class="k">Presupuesto orientativo</span><p>Está condicionado a la complejidad real del trabajo. Una vez pasados los tres meses del periodo de prueba (diciembre de 2026), se revisará con la Fundación y, si es necesario, se ajustará.</p></div>
   </div>
 </section>
