@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía editable de comunicación de equipo</title>
+<meta name="description" content="Define los canales, reuniones, urgencias y próximos pasos de tu equipo.">
+<style>
+  :root{
+    --radius: 10px;
+    --background: oklch(0.965 0.018 82);
+    --foreground: oklch(0.27 0.035 52);
+    --card: oklch(0.987 0.011 81);
+    --primary: oklch(0.64 0.17 49);
+    --primary-foreground: oklch(0.99 0.01 82);
+    --secondary: oklch(0.91 0.028 78);
+    --muted-foreground: oklch(0.49 0.035 55);
+    --accent: oklch(0.84 0.055 67);
+    --border: oklch(0.82 0.035 73);
+    --input: oklch(0.77 0.047 69);
+    --field: oklch(0.94 0.032 70);
+    --earth: oklch(0.46 0.07 50);
+    --success: oklch(0.43 0.09 145);
+    --success-soft: oklch(0.91 0.045 140);
+    --shadow-soft: 0 10px 30px oklch(0.46 0.07 50 / 9%);
+    --font-display: Georgia, 'Times New Roman', serif;
+    --font-sans: 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--background);
+    color:var(--foreground);
+    font-family:var(--font-sans);
+  }
+  button,input,textarea,select{font:inherit;}
+  button{cursor:pointer;}
+  a{color:inherit;}
+
+  .layout{display:grid;grid-template-columns:270px 1fr;min-height:100vh;max-width:1500px;margin:0 auto;}
+  @media (max-width:860px){ .layout{grid-template-columns:1fr;} }
+
+  /* ---- Mobile header ---- */
+  .mobile-header{position:sticky;top:0;z-index:40;display:none;align-items:center;justify-content:space-between;height:64px;padding:0 20px;background:color-mix(in oklab, var(--background) 95%, transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);}
+  @media (max-width:860px){ .mobile-header{display:flex;} }
+  .brand-btn{background:none;border:none;font-family:var(--font-display);font-size:18px;font-weight:bold;text-align:left;padding:0;}
+  .brand-btn .accent{color:var(--primary);}
+  .icon-btn{background:none;border:none;padding:8px;border-radius:999px;display:flex;color:var(--foreground);}
+  .icon-btn:hover{background:var(--secondary);}
+  #mobileMenu{display:none;position:fixed;inset-inline:0;top:64px;z-index:30;background:var(--background);border-bottom:1px solid var(--border);box-shadow:var(--shadow-soft);padding:16px;}
+
+  /* ---- Sidebar ---- */
+  aside{position:sticky;top:0;align-self:start;height:100vh;border-right:1px solid var(--border);background:color-mix(in oklab, var(--secondary) 50%, transparent);padding:36px 28px;display:flex;flex-direction:column;}
+  @media (max-width:860px){ aside{display:none;} }
+  .logo{font-family:var(--font-display);font-size:24px;font-weight:bold;line-height:1.15;background:none;border:none;text-align:left;padding:0;}
+  .logo .accent{color:var(--primary);}
+  .tagline{margin-top:12px;font-size:12px;line-height:1.6;color:var(--muted-foreground);}
+  nav{margin-top:40px;display:flex;flex-direction:column;gap:4px;}
+  .nav-item{display:flex;align-items:center;gap:12px;width:100%;border:none;background:none;border-radius:8px;padding:12px;text-align:left;font-size:14px;color:var(--muted-foreground);transition:background .15s,color .15s;}
+  .nav-item:hover{background:var(--secondary);color:var(--foreground);}
+  .nav-item.active{background:var(--accent);color:oklch(0.29 0.04 51);font-weight:bold;}
+  .nav-item .num{font-family:var(--font-mono);font-size:10px;}
+  .nav-item .ic{display:flex;color:var(--primary);}
+  .nav-item:not(.active) .ic{color:var(--muted-foreground);}
+  .nav-item .dot{margin-left:auto;width:6px;height:6px;border-radius:999px;background:var(--primary);}
+  .sidebar-foot{margin-top:auto;border-top:1px solid var(--border);padding-top:20px;font-size:12px;color:var(--muted-foreground);}
+  .sidebar-foot strong{display:block;color:var(--foreground);font-weight:bold;}
+
+  main{min-width:0;padding:32px 20px;}
+  @media (min-width:640px){ main{padding:32px 32px;} }
+  @media (min-width:860px){ main{padding:48px 48px;} }
+  @media (min-width:1100px){ main{padding:48px 64px;} }
+  .content{max-width:960px;margin:0 auto;animation:enter .4s ease-out both;}
+  @keyframes enter{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  @keyframes gatein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .animate-gate-in{animation:gatein .7s ease-out both;}
+
+  .eyebrow{font-family:var(--font-mono);font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.14em;color:var(--primary);margin:0;}
+
+  /* ---- Hero ---- */
+  .hero-deco{position:relative;}
+  .hero-deco svg{position:absolute;z-index:-1;opacity:.55;pointer-events:none;}
+  .blob1{top:-60px;right:-120px;width:420px;height:420px;}
+  .blob2{top:220px;left:-140px;width:320px;height:320px;}
+  h1.hero-title{margin:18px 0 0;max-width:760px;font-family:var(--font-display);font-weight:bold;line-height:1.1;font-size:38px;}
+  @media (min-width:640px){ h1.hero-title{font-size:58px;} }
+  h1.hero-title .accent{color:var(--primary);}
+  .hero-sub{margin-top:26px;max-width:620px;font-size:18px;line-height:1.65;color:var(--muted-foreground);}
+
+  /* ---- Email gate ---- */
+  .gate-card{margin-top:40px;max-width:680px;overflow:hidden;border-radius:26px;border:1px solid var(--border);background:var(--card);padding:28px;box-shadow:var(--shadow-soft);position:relative;}
+  .gate-card::before{content:"";position:absolute;inset:0;border-radius:26px;padding:1px;background:linear-gradient(135deg, var(--primary), transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.35;}
+  @media (min-width:640px){ .gate-card{padding:34px;} }
+  .gate-head{display:flex;align-items:flex-start;gap:14px;}
+  .gate-icon{flex-shrink:0;display:grid;place-items:center;width:38px;height:38px;border-radius:999px;background:var(--secondary);color:var(--primary);}
+  .gate-step{font-family:var(--font-mono);font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.14em;color:var(--primary);margin:0;}
+  .gate-title{margin:8px 0 0;font-family:var(--font-display);font-size:19px;font-weight:bold;line-height:1.35;}
+  .gate-frame-wrap{margin-top:22px;border-radius:18px;overflow:hidden;border:1px solid var(--border);box-shadow:inset 0 0 0 6px var(--field);}
+  iframe.gate-frame{display:block;width:100%;height:560px;border:0;background:var(--card);scrollbar-width:none;}
+  iframe.gate-frame::-webkit-scrollbar{display:none;}
+  .gate-manual{margin-top:14px;display:flex;justify-content:flex-end;}
+  .gate-manual button{background:none;border:none;font-size:13px;color:var(--muted-foreground);text-decoration:underline;text-underline-offset:4px;}
+  .gate-manual button:hover{color:var(--primary);}
+  .legal-notice{margin-top:16px;max-width:680px;font-size:12px;line-height:1.6;color:var(--muted-foreground);}
+
+  /* ---- Intro steps ---- */
+  .steps{margin-top:40px;display:grid;gap:1px;overflow:hidden;border-radius:10px;border:1px solid var(--border);background:var(--border);}
+  @media (min-width:640px){ .steps{grid-template-columns:repeat(3,1fr);} }
+  .step{background:var(--card);padding:24px;}
+  .step .num{font-family:var(--font-mono);font-size:12px;color:var(--primary);}
+  .step h2{margin:18px 0 0;font-family:var(--font-display);font-size:18px;font-weight:bold;}
+  .step p{margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--muted-foreground);}
+
+  .cta-row{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:12px 22px;font-size:14px;font-weight:bold;background:var(--primary);color:var(--primary-foreground);transition:opacity .15s;}
+  .btn:hover{opacity:.9;}
+  .btn.quiet{background:none;color:var(--foreground);border:1px solid var(--border);}
+  .btn.quiet:hover{background:var(--secondary);}
+  .cta-row p{font-size:14px;color:var(--muted-foreground);}
+
+  blockquote.pull{margin:56px 0 0;max-width:680px;border-left:2px solid var(--primary);padding-left:22px;font-family:var(--font-display);font-size:24px;line-height:1.35;}
+  @media (min-width:640px){ blockquote.pull{font-size:28px;} }
+
+  /* ---- Page header (sections) ---- */
+  .page-head{margin-bottom:30px;position:relative;}
+  .page-head h1{margin:14px 0 0;font-family:var(--font-display);font-size:34px;font-weight:bold;display:flex;align-items:center;gap:14px;}
+  @media (min-width:640px){ .page-head h1{font-size:44px;} }
+  .page-head .head-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:var(--secondary);color:var(--primary);}
+  .page-head p{margin-top:14px;max-width:640px;font-size:15px;line-height:1.65;color:var(--muted-foreground);}
+
+  .blocks{display:flex;flex-direction:column;gap:16px;}
+  .block{border-radius:14px;border:1px solid var(--border);background:var(--card);padding:20px;box-shadow:var(--shadow-soft);}
+  .block-head{margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
+  .block-head h2{margin:0;font-family:var(--font-display);font-size:17px;font-weight:bold;}
+  .danger{background:none;border:none;color:oklch(0.55 0.16 28);padding:6px;border-radius:8px;}
+  .danger:hover{background:oklch(0.92 0.04 28);}
+  .grid2{display:grid;gap:14px;}
+  @media (min-width:768px){ .grid2{grid-template-columns:1fr 1fr;} }
+  label.field-label{display:block;}
+  label.field-label span{display:block;margin-bottom:6px;font-size:12px;font-weight:bold;color:var(--muted-foreground);}
+  textarea.field, input.form-input, select.form-input{width:100%;border-radius:8px;border:1px solid var(--input);background:var(--field);padding:9px 11px;font-size:14px;color:var(--foreground);outline:none;resize:vertical;}
+  textarea.field{min-height:64px;}
+  input.form-input, select.form-input{height:44px;}
+  textarea.field:focus, input.form-input:focus, select.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 2px oklch(0.64 0.17 49 / 25%);}
+  .add-btn{margin-top:18px;}
+
+  /* ---- Urgency cards ---- */
+  .urgency-grid{display:grid;gap:16px;}
+  @media (min-width:1024px){ .urgency-grid{grid-template-columns:repeat(3,1fr);} }
+  .urgency{min-height:280px;border:1px solid var(--border);border-top-width:4px;border-radius:14px;background:var(--card);padding:24px;box-shadow:var(--shadow-soft);}
+  .urgency-red{border-top-color:oklch(0.55 0.16 28);color:oklch(0.48 0.15 28);}
+  .urgency-orange{border-top-color:var(--primary);color:oklch(0.55 0.14 55);}
+  .urgency-green{border-top-color:var(--success);color:var(--success);}
+  .urgency-top{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .urgency-dot{width:12px;height:12px;border-radius:999px;background:currentColor;}
+  .urgency-resp{font-size:12px;font-weight:bold;text-transform:uppercase;}
+  .urgency h2{margin:28px 0 0;font-family:var(--font-display);font-size:22px;font-weight:bold;color:var(--foreground);}
+  .urgency p{margin-top:12px;font-size:14px;line-height:1.6;color:var(--muted-foreground);}
+  .urgency .chan{margin-top:22px;border-top:1px solid currentColor;opacity:.9;padding-top:14px;font-size:14px;font-weight:bold;color:var(--foreground);}
+
+  .rules-wrap{margin-top:36px;border-top:1px solid var(--border);padding-top:30px;}
+  .rules-wrap h2{margin:0;font-family:var(--font-display);font-size:24px;font-weight:bold;}
+  .rules-wrap>p{margin-top:8px;font-size:14px;color:var(--muted-foreground);}
+  .rules{margin-top:18px;display:flex;flex-direction:column;gap:10px;}
+  .rule{display:flex;align-items:flex-start;gap:12px;border:1px solid var(--border);background:var(--card);border-radius:10px;padding:14px;font-size:14px;line-height:1.6;cursor:pointer;}
+  .rule input{margin-top:3px;width:16px;height:16px;accent-color:var(--primary);}
+
+  /* ---- Plan ---- */
+  .progress-box{margin-bottom:26px;display:flex;align-items:center;gap:18px;border:1px solid var(--border);background:var(--secondary);border-radius:12px;padding:20px;}
+  .progress-circle{display:grid;place-items:center;width:56px;height:56px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font-size:19px;font-weight:bold;flex-shrink:0;}
+  .progress-box h2{margin:0;font-family:var(--font-display);font-size:17px;font-weight:bold;}
+  .progress-box p{margin-top:2px;font-size:14px;color:var(--muted-foreground);}
+  .plan-card{border:1px solid var(--border);background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--shadow-soft);}
+  .plan-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .plan-num{display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:var(--secondary);font-family:var(--font-mono);font-size:12px;font-weight:bold;}
+  .plan-head h2{margin:0;font-family:var(--font-display);font-size:17px;font-weight:bold;}
+  .plan-grid{display:grid;gap:14px;}
+  @media (min-width:860px){ .plan-grid{grid-template-columns:2fr 1fr 1fr 1fr;} }
+  .success-banner{margin-top:22px;display:flex;align-items:center;gap:12px;border-radius:10px;background:var(--success-soft);padding:16px;font-size:14px;font-weight:bold;color:var(--success);}
+
+  footer.guide-footer{margin-top:48px;display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--border);padding-top:24px;}
+  @media (min-width:640px){ footer.guide-footer{flex-direction:row;align-items:center;justify-content:space-between;} }
+  .footer-actions{display:flex;flex-wrap:wrap;gap:10px;}
+
+  [hidden]{display:none !important;}
+
+  @media print{
+    aside, .mobile-header, footer.guide-footer, .gate-card, .legal-notice{display:none !important;}
+    main{padding:0 !important;}
+    body{background:var(--card);}
+  }
+</style>
+</head>
+<body>
+
+<header class="mobile-header">
+  <button class="brand-btn" onclick="goTo('inicio')">Comunicación <span class="accent">clara.</span></button>
+  <button class="icon-btn" id="menuToggle" aria-label="Abrir menú" hidden></button>
+</header>
+<div id="mobileMenu"></div>
+
+<div class="layout">
+  <aside>
+    <button class="logo" onclick="goTo('inicio')">Comunicación<br><span class="accent">clara.</span></button>
+    <p class="tagline">Guía práctica para equipos que quieren trabajar con menos ruido.</p>
+    <nav id="sidebarNav" hidden></nav>
+    <div class="sidebar-foot">
+      <strong>Tu espacio de trabajo</strong>
+      Edita los ejemplos y hazlos tuyos.
+    </div>
+  </aside>
+
+  <main>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+
+<script>
+/* ====================== ICONS (inline SVG, lucide-style) ====================== */
+const icon = (path, size=16) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+const Icons = {
+  home: icon('<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>'),
+  channel: icon('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/>'),
+  meeting: icon('<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="8" r="2.4"/><path d="M15.2 14.3c2.5.4 4.3 2.6 4.3 5.7"/>'),
+  light: icon('<rect x="8" y="2" width="8" height="18" rx="4"/><circle cx="12" cy="7" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="17" r="1.4" fill="currentColor"/>'),
+  plan: icon('<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/><path d="m8 15 2.5 2.5L16 12"/>'),
+  arrow: icon('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+  download: icon('<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>'),
+  printer: icon('<path d="M6 9V2h12v7"/><rect x="4" y="9" width="16" height="8" rx="1"/><path d="M6 17v5h12v-5"/>'),
+  plus: icon('<path d="M12 5v14M5 12h14"/>'),
+  trash: icon('<path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>'),
+  check: icon('<path d="m5 12 5 5L20 7"/>'),
+  menu: icon('<path d="M4 7h16M4 12h16M4 17h16"/>',21),
+  x: icon('<path d="M18 6 6 18M6 6l18 12"/>'.replace('18 12','18 18'),21),
+  lock: icon('<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>', 15),
+};
+Icons.x = icon('<path d="M18 6 6 18M6 6l12 12"/>', 21);
+
+/* ====================== DATA ====================== */
+const NAV = [
+  { id:"inicio", label:"Empieza aquí", number:"00", icon: Icons.home },
+  { id:"canales", label:"Canales", number:"01", icon: Icons.channel },
+  { id:"reuniones", label:"Reuniones", number:"02", icon: Icons.meeting },
+  { id:"urgencias", label:"Semáforo", number:"03", icon: Icons.light },
+  { id:"plan", label:"Plan 7 días", number:"04", icon: Icons.plan },
+];
+
+const STORE_KEY = "guia-comunicacion-datos";
+const UNLOCK_KEY = "guia-comunicacion-desbloqueada";
+const FORM_URL = "https://docs.google.com/forms/d/1dZtEQ_u8-2zgmu_jgZ0KGghjPPSTbPNtwn2xTR3p0CY/viewform?embedded=true";
+
+const defaultState = () => ({
+  channels: [
+    { channel:"Slack / Teams", use:"Comunicación interna del día a día", messages:"Avisos, dudas rápidas, visibilidad de avances", owner:"Cada responsable de área", response:"Antes de 4h en horario laboral" },
+    { channel:"Email", use:"Comunicación externa", messages:"Contratos, propuestas, cualquier cosa formal", owner:"Persona de contacto de cada cuenta", response:"Antes de 24h laborables" },
+    { channel:"Asana / Notion / ClickUp", use:"Gestión operativa de tareas", messages:"Tareas, plazos, responsables y adjuntos", owner:"Cada dueño de tarea", response:"Al finalizar el día de trabajo" },
+    { channel:"Drive / Notion", use:"Documentación permanente", messages:"Procesos, plantillas y decisiones cerradas", owner:"Quien crea el documento", response:"Consulta libre" },
+  ],
+  meetings: [
+    { type:"Reunión semanal de equipo", people:"CEO/Empresaria + responsables de área", cadence:"Semanal", goal:"Alinear prioridades y destapar bloqueos", channel:"Videollamada" },
+    { type:"Check operativo", people:"Responsable + equipo técnico", cadence:"Semanal", goal:"Revisar avances y resolver dudas puntuales", channel:"Slack / Videollamada corta" },
+    { type:"Revisión mensual", people:"CEO/Empresaria + responsables clave", cadence:"Mensual", goal:"Ver resultados y ajustar el rumbo", channel:"Videollamada" },
+  ],
+  rules: [
+    { text:"Las tareas nuevas siempre entran en el gestor de proyectos.", checked:false },
+    { text:"Todo mensaje lleva contexto; nunca solo “¿lo viste?”.", checked:false },
+    { text:"Quien escribe marca el nivel de urgencia siguiendo el semáforo.", checked:false },
+    { text:"Antes de crear un chat nuevo, comprobamos si ya existe un canal.", checked:false },
+  ],
+  actions: [
+    { change:"", owner:"", date:"", status:"Pendiente" },
+    { change:"", owner:"", date:"", status:"Pendiente" },
+    { change:"", owner:"", date:"", status:"Pendiente" },
+  ],
+});
+
+let state = JSON.parse(localStorage.getItem(STORE_KEY) || "null") || defaultState();
+let unlocked = localStorage.getItem(UNLOCK_KEY) === "1";
+let active = "inicio";
+let loadCount = 0;
+
+function persist(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+function unlock(){ unlocked = true; localStorage.setItem(UNLOCK_KEY,"1"); render(); }
+
+/* ====================== RENDER ====================== */
+function goTo(id){ active = id; window.scrollTo({top:0,behavior:"smooth"}); render(); }
+
+function renderNav(container){
+  container.innerHTML = NAV.map(item => `
+    <button class="nav-item ${active===item.id ? 'active':''}" data-nav="${item.id}">
+      <span class="ic">${item.icon}</span>
+      <span class="num">${item.number}</span>
+      <span style="flex:1">${item.label}</span>
+      ${active===item.id ? '<span class="dot"></span>' : ''}
+    </button>`).join("");
+  container.querySelectorAll('[data-nav]').forEach(b => b.onclick = () => { goTo(b.dataset.nav); closeMobileMenu(); });
+}
+
+function closeMobileMenu(){ document.getElementById('mobileMenu').style.display='none'; }
+
+function render(){
+  const sidebarNav = document.getElementById('sidebarNav');
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if(unlocked){ sidebarNav.hidden = false; renderNav(sidebarNav); menuToggle.hidden = false; renderNav(mobileMenu); }
+  else{ sidebarNav.hidden = true; menuToggle.hidden = true; mobileMenu.style.display='none'; }
+
+  menuToggle.onclick = () => {
+    const open = mobileMenu.style.display === 'block';
+    mobileMenu.style.display = open ? 'none' : 'block';
+    menuToggle.innerHTML = open ? Icons.menu : Icons.x;
+  };
+  menuToggle.innerHTML = Icons.menu;
+
+  const content = document.getElementById('content');
+  content.innerHTML = "";
+  content.appendChild(renderSection());
+
+  if(unlocked){
+    const idx = NAV.findIndex(n => n.id === active);
+    const next = NAV[Math.min(idx+1, NAV.length-1)];
+    const footer = document.createElement('footer');
+    footer.className = 'guide-footer animate-gate-in';
+    footer.innerHTML = `
+      <div class="footer-actions">
+        <button class="btn" id="printBtn">${Icons.printer} Imprimir / Guardar como PDF</button>
+      </div>
+      ${active !== 'plan' ? `<button class="btn" id="nextBtn">Continuar: ${next.label} ${Icons.arrow}</button>` : ''}`;
+    content.appendChild(footer);
+    footer.querySelector('#printBtn').onclick = () => window.print();
+    const nextBtn = footer.querySelector('#nextBtn');
+    if(nextBtn) nextBtn.onclick = () => goTo(next.id);
+  }
+}
+
+function renderSection(){
+  if(active === "inicio" || !unlocked) return renderIntro();
+  if(active === "canales") return renderChannels();
+  if(active === "reuniones") return renderMeetings();
+  if(active === "urgencias") return renderUrgencies();
+  if(active === "plan") return renderPlan();
+}
+
+/* ---- Intro / hero ---- */
+function renderIntro(){
+  const wrap = document.createElement('div');
+  wrap.innerHTML = `
+    <section class="hero-deco">
+      <svg class="blob1" viewBox="0 0 200 200"><path fill="oklch(0.84 0.055 67)" d="M51.9,-64.5C66.5,-55.6,77.1,-39.4,80.6,-22.1C84.1,-4.7,80.5,13.8,72.1,29.4C63.8,45,50.6,57.7,35.5,65.6C20.4,73.5,3.3,76.6,-13.9,75.3C-31.1,74,-48.5,68.3,-60.6,56.8C-72.7,45.3,-79.6,28,-80.9,10.1C-82.2,-7.8,-77.9,-26.3,-67.7,-40.8C-57.4,-55.3,-41.2,-65.8,-24.9,-73.3C-8.5,-80.8,8.9,-85.3,24.9,-80.6C40.9,-75.9,37.3,-73.4,51.9,-64.5Z" transform="translate(100 100)"/></svg>
+      <svg class="blob2" viewBox="0 0 200 200"><path fill="oklch(0.91 0.028 78)" d="M44.7,-56.7C56.9,-47.9,64.9,-32.9,67.8,-17.1C70.7,-1.3,68.5,15.3,60.6,28.6C52.8,41.9,39.3,51.8,24.6,58.4C9.9,65,-6,68.3,-21.6,65.3C-37.2,62.3,-52.5,53,-61.8,39.5C-71.1,26,-74.4,8.3,-71.6,-8.1C-68.8,-24.5,-59.9,-39.6,-47.3,-48.5C-34.7,-57.4,-18.4,-60.1,-1.1,-58.4C16.1,-56.7,32.5,-65.5,44.7,-56.7Z" transform="translate(100 100)"/></svg>
+      <p class="eyebrow">Guía de comunicación de equipo</p>
+      <h1 class="hero-title">Menos mensajes perdidos.<br><span class="accent">Más claridad compartida.</span></h1>
+      <p class="hero-sub">Pon en un solo lugar quién habla por dónde, cuándo se reúne el equipo y qué se considera urgente de verdad.</p>
+      <div id="gateOrContent"></div>
+    </section>`;
+  const target = wrap.querySelector('#gateOrContent');
+  if(!unlocked){ target.appendChild(renderGate()); }
+  else{
+    const rest = document.createElement('div');
+    rest.className = 'animate-gate-in';
+    rest.innerHTML = `
+      <div class="steps">
+        <div class="step"><span class="num">01</span><h2>Define los canales</h2><p>Un lugar claro para cada tipo de conversación.</p></div>
+        <div class="step"><span class="num">02</span><h2>Reduce el ruido</h2><p>Reuniones útiles y un semáforo compartido.</p></div>
+        <div class="step"><span class="num">03</span><h2>Pasa a la acción</h2><p>Tres cambios concretos para esta semana.</p></div>
+      </div>
+      <div class="cta-row">
+        <button class="btn" id="startBtn">Empezar la guía ${Icons.arrow}</button>
+        <p>Puedes editar todos los campos en color tierra claro.</p>
+      </div>
+      <blockquote class="pull">"Casi nada es tan urgente como parece a las 22h."</blockquote>`;
+    target.appendChild(rest);
+    rest.querySelector('#startBtn').onclick = () => goTo('canales');
+  }
+  return wrap;
+}
+
+function renderGate(){
+  const el = document.createElement('div');
+  el.innerHTML = `
+    <div class="gate-card">
+      <div class="gate-head">
+        <span class="gate-icon">${Icons.lock}</span>
+        <div>
+          <p class="gate-step">Paso previo</p>
+          <p class="gate-title">Déjame tu email para desbloquear la guía — tarda 10 segundos</p>
+        </div>
+      </div>
+      <div class="gate-frame-wrap">
+        <iframe class="gate-frame" title="Formulario de acceso a la guía" src="${FORM_URL}"></iframe>
+      </div>
+      <div class="gate-manual"><button id="manualUnlock">Ya he enviado el formulario → Ver la guía</button></div>
+    </div>
+    <p class="legal-notice">Información básica sobre protección de datos — Responsable: Carmen Oliva. Finalidad: gestionar tu solicitud y enviarte la guía y comunicaciones relacionadas con contenido similar. Legitimación: tu consentimiento. Destinatarios: no se ceden datos a terceros, salvo obligación legal. Derechos: acceder, rectificar o suprimir tus datos escribiendo a carmen.projectm.digital@gmail.com.</p>`;
+  const iframe = el.querySelector('iframe');
+  iframe.addEventListener('load', () => { loadCount += 1; if(loadCount >= 2) unlock(); });
+  el.querySelector('#manualUnlock').onclick = unlock;
+  return el;
+}
+
+/* ---- Page header helper ---- */
+function pageHeader(number, title, desc, iconSvg){
+  return `<header class="page-head"><p class="eyebrow">${number} / 04</p><h1><span class="head-icon">${iconSvg}</span>${title}</h1><p>${desc}</p></header>`;
+}
+
+/* ---- Canales ---- */
+function renderChannels(){
+  const wrap = document.createElement('section');
+  wrap.innerHTML = pageHeader("01","Canales oficiales","Un canal por función. Si dos sirven para lo mismo, el equipo elegirá siempre el más cómodo — y casi nunca el correcto.", Icons.channel) +
+    `<div class="blocks" id="chBlocks"></div><button class="btn quiet add-btn" id="addCh">${Icons.plus} Añadir canal</button>`;
+  const blocks = wrap.querySelector('#chBlocks');
+  const fields = [["channel","Canal"],["use","Para qué se usa"],["messages","Qué mensajes van aquí"],["owner","Responsable"],["response","Tiempo de respuesta"]];
+  const draw = () => {
+    blocks.innerHTML = state.channels.map((row,i) => `
+      <article class="block" data-i="${i}">
+        <div class="block-head"><h2>Canal ${i+1}</h2><button class="danger" data-del="${i}" aria-label="Eliminar">${Icons.trash}</button></div>
+        <div class="grid2">${fields.map(([k,label]) => `
+          <label class="field-label"><span>${label}</span><textarea class="field" data-k="${k}" rows="2">${row[k]}</textarea></label>`).join("")}
+        </div>
+      </article>`).join("");
+    blocks.querySelectorAll('textarea').forEach(t => {
+      const i = +t.closest('[data-i]').dataset.i;
+      t.addEventListener('input', () => { state.channels[i][t.dataset.k] = t.value; persist(); });
+    });
+    blocks.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { state.channels.splice(+b.dataset.del,1); persist(); draw(); });
+  };
+  draw();
+  wrap.querySelector('#addCh').onclick = () => { state.channels.push({channel:"",use:"",messages:"",owner:"",response:""}); persist(); draw(); };
+  return wrap;
+}
+
+/* ---- Reuniones ---- */
+function renderMeetings(){
+  const wrap = document.createElement('section');
+  wrap.innerHTML = pageHeader("02","Reuniones y rituales","Si una reunión no cambia una decisión ni desbloquea nada, puede ser un mensaje asíncrono.", Icons.meeting) +
+    `<div class="blocks" id="mtBlocks"></div><button class="btn quiet add-btn" id="addMt">${Icons.plus} Añadir reunión</button>`;
+  const blocks = wrap.querySelector('#mtBlocks');
+  const fields = [["type","Tipo de reunión"],["people","Participantes"],["cadence","Frecuencia"],["goal","Objetivo concreto"],["channel","Canal"]];
+  const draw = () => {
+    blocks.innerHTML = state.meetings.map((row,i) => `
+      <article class="block" data-i="${i}">
+        <div class="block-head"><h2>Ritual ${i+1}</h2><button class="danger" data-del="${i}" aria-label="Eliminar">${Icons.trash}</button></div>
+        <div class="grid2">${fields.map(([k,label]) => `
+          <label class="field-label"><span>${label}</span><textarea class="field" data-k="${k}" rows="2">${row[k]}</textarea></label>`).join("")}
+        </div>
+      </article>`).join("");
+    blocks.querySelectorAll('textarea').forEach(t => {
+      const i = +t.closest('[data-i]').dataset.i;
+      t.addEventListener('input', () => { state.meetings[i][t.dataset.k] = t.value; persist(); });
+    });
+    blocks.querySelectorAll('[data-del]').forEach(b => b.onclick = () => { state.meetings.splice(+b.dataset.del,1); persist(); draw(); });
+  };
+  draw();
+  wrap.querySelector('#addMt').onclick = () => { state.meetings.push({type:"",people:"",cadence:"",goal:"",channel:""}); persist(); draw(); };
+  return wrap;
+}
+
+/* ---- Semáforo ---- */
+function renderUrgencies(){
+  const wrap = document.createElement('section');
+  wrap.innerHTML = pageHeader("03","Semáforo de urgencias","La pieza que evita que todo llegue por WhatsApp marcado como urgente.", Icons.light) + `
+    <div class="urgency-grid">
+      <article class="urgency urgency-red"><div class="urgency-top"><span class="urgency-dot"></span><span class="urgency-resp">Inmediato</span></div><h2>Urgente</h2><p>Bloquea el trabajo de otra persona ahora o existe un riesgo real: cliente, pago o incidencia pública.</p><div class="chan">Llamada o mensaje directo</div></article>
+      <article class="urgency urgency-orange"><div class="urgency-top"><span class="urgency-dot"></span><span class="urgency-resp">Mismo día laboral</span></div><h2>Importante, no urgente</h2><p>Hay que resolverlo, pero puede esperar al horario laboral o al canal correspondiente.</p><div class="chan">Slack o gestor de tareas</div></article>
+      <article class="urgency urgency-green"><div class="urgency-top"><span class="urgency-dot"></span><span class="urgency-resp">Sin tiempo definido</span></div><h2>Informativo</h2><p>Solo deja constancia o da visibilidad. No requiere ninguna acción inmediata.</p><div class="chan">Slack sin mención o Drive</div></article>
+    </div>
+    <div class="rules-wrap">
+      <h2>Normas básicas</h2>
+      <p>Márcalas cuando el equipo las haya acordado.</p>
+      <div class="rules" id="rulesList"></div>
+    </div>`;
+  const list = wrap.querySelector('#rulesList');
+  const draw = () => {
+    list.innerHTML = state.rules.map((r,i) => `
+      <label class="rule"><input type="checkbox" data-i="${i}" ${r.checked?'checked':''}><span>${r.text}</span></label>`).join("");
+    list.querySelectorAll('input').forEach(cb => cb.addEventListener('change', () => { state.rules[+cb.dataset.i].checked = cb.checked; persist(); }));
+  };
+  draw();
+  return wrap;
+}
+
+/* ---- Plan 7 días ---- */
+function renderPlan(){
+  const wrap = document.createElement('section');
+  const completed = () => state.actions.filter(a => a.status === "Hecho").length;
+  wrap.innerHTML = pageHeader("04","Plan de los próximos 7 días","Tres cambios. No diez. Con fecha y responsable, o se quedarán aquí para siempre.", Icons.plan) +
+    `<div class="progress-box"><div class="progress-circle" id="progCircle"></div><div><h2>Cambios completados</h2><p>Cada pequeño acuerdo reduce el ruido.</p></div></div>
+     <div class="blocks" id="planBlocks"></div>
+     <div id="successBanner"></div>`;
+  const circle = wrap.querySelector('#progCircle');
+  const blocks = wrap.querySelector('#planBlocks');
+  const banner = wrap.querySelector('#successBanner');
+  const draw = () => {
+    circle.textContent = `${completed()}/3`;
+    banner.innerHTML = completed() === 3 ? `<div class="success-banner">${Icons.check} Ya tenéis tres cambios listos para poner en marcha.</div>` : "";
+    blocks.innerHTML = state.actions.map((row,i) => `
+      <article class="plan-card" data-i="${i}">
+        <div class="plan-head"><span class="plan-num">${i+1}</span><h2>Cambio concreto</h2></div>
+        <div class="plan-grid">
+          <label class="field-label"><span>Qué vamos a cambiar</span><input class="form-input" data-k="change" value="${row.change}" placeholder="Ej. Dejar de asignar por WhatsApp"></label>
+          <label class="field-label"><span>Responsable</span><input class="form-input" data-k="owner" value="${row.owner}" placeholder="Nombre"></label>
+          <label class="field-label"><span>Fecha límite</span><input type="date" class="form-input" data-k="date" value="${row.date}"></label>
+          <label class="field-label"><span>Estado</span><select class="form-input" data-k="status">
+            ${["Pendiente","En curso","Hecho"].map(s => `<option ${row.status===s?'selected':''}>${s}</option>`).join("")}
+          </select></label>
+        </div>
+      </article>`).join("");
+    blocks.querySelectorAll('[data-k]').forEach(inp => {
+      const i = +inp.closest('[data-i]').dataset.i;
+      inp.addEventListener('input', () => { state.actions[i][inp.dataset.k] = inp.value; persist(); draw(); });
+      inp.addEventListener('change', () => { state.actions[i][inp.dataset.k] = inp.value; persist(); draw(); });
+    });
+  };
+  draw();
+  return wrap;
+}
+
+render();
+</script>
+</body>
+</html>
